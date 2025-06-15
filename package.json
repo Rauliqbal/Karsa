@@ -1,0 +1,11 @@
+{ 
+  "name": "create-express-stack",
+  "version": "0.0.0",
+  "author": "Rauliqbal",
+  "scripts": {
+    "dev": "concurrently 'cd backend && npm run dev' 'cd frontend && npm run dev'"
+  },
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
