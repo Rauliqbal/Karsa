@@ -10,14 +10,16 @@ import { errorHandler } from './middlewares/errorHandler'
 dotenv.config()
 const app = express()
 
-// middleware
+// Midleware 
 app.use(cors())
 app.use(helmet())
 app.use(morgan('dev'))
 app.use(express.json())
-app.use(errorHandler)
 
 // routes
 app.use('/api/v1/', routes)
+
+// Error Handler
+app.use(errorHandler)
 
 export default app
