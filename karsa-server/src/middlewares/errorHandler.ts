@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from "express";
 
 export const errorHandler = (
   err: unknown,
@@ -6,17 +6,24 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  const status = res.statusCode !== 200 ? res.statusCode : 500;
+  const statusCode =
+    res.statusCode && res.statusCode !== 200 ? res.statusCode : 500;
 
-  const message =
+  const isDev = process.env.NODE_ENV === "development";
+
+  const errorMessage =
     err instanceof Error
       ? err.message
-      : typeof err === 'string'
+      : typeof err === "string"
       ? err
-      : 'Unexpected error';
+      : "Unexpected error";
 
-  res.status(status).json({
-    message: 'Terjadi kesalahan pada server',
-    error: message,
-  });
+  const errorResponse = {
+    sucess: false,
+    message: "Terjadi kesalahan pada server",
+    error: errorMessage,
+    ...(isDev && { error: errorMessage }),
+  };
+
+  res.status(statusCode).json(errorResponse);
 };
