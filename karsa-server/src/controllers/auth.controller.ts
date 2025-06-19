@@ -87,4 +87,25 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const getUser = async (req: Request, res: Response) => {};
+// Function Get User
+export const getUser = async (
+  req: Request & { user?: { id: string } },
+  res: Response
+): Promise<void> => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: req.user?.id,
+    },
+  });
+
+  if (!user) {
+    res.status(404).json({ success: false, message: "User not found" });
+    return;
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Berhasil mendapatkan data user",
+    data: user,
+  });
+};
