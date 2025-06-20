@@ -1,10 +1,10 @@
-{ 
+{
   "name": "create-express-stack",
   "version": "0.0.0",
   "author": "Rauliqbal",
   "scripts": {
-    "start:fe" : "cd karsa-client && pnpm dev",
-    "start:be" : "cd karsa-server && pnpm dev",
+    "start:fe": "cd karsa-client && pnpm dev",
+    "start:be": "cd karsa-server && pnpm dev",
     "dev": "concurrently \"pnpm start:fe\" \"pnpm start:be\""
   },
   "dependencies": {

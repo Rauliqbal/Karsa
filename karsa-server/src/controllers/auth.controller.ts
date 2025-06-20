@@ -49,42 +49,35 @@ export const registerUser = async (
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
 
-  try {
-    const user = await prisma.user.findUnique({
-      where: { email },
-    });
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
 
-    if (!user) {
-      res.status(404).json({ message: "Email tidak ditemukan" });
-      return;
-    }
-
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) {
-      res.status(401).json({ message: "Password salah" });
-      return;
-    }
-
-    const token = jwt.sign(
-      { id: user.id },
-      process.env.SECRET_TOKEN as string,
-      { expiresIn: "1d" }
-    );
-
-    const { password: _, ...userWithoutPassword } = user;
-
-    res.status(200).json({
-      success: true,
-      message: "Login berhasil",
-      data: {
-        user: userWithoutPassword,
-        token,
-      },
-    });
-  } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({ message: "Terjadi kesalahan pada server" });
+  if (!user) {
+    res.status(404).json({ message: "Email tidak ditemukan" });
+    return;
   }
+
+  const validPassword = await bcrypt.compare(password, user.password);
+  if (!validPassword) {
+    res.status(401).json({ message: "Password salah" });
+    return;
+  }
+
+  const token = jwt.sign({ id: user.id }, process.env.SECRET_TOKEN as string, {
+    expiresIn: "1d",
+  });
+
+  const { password: _, ...userWithoutPassword } = user;
+
+  res.status(200).json({
+    success: true,
+    message: "Login berhasil",
+    data: {
+      user: userWithoutPassword,
+      token,
+    },
+  });
 };
 
 // Function Get User
