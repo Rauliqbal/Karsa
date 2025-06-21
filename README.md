@@ -96,6 +96,14 @@ pnpm install
 NUXT_API_URL=http://localhost:3001/api/v1
 ```
 
+go to root folder karsa-project
+
+### 🚀 Rnning Project
+
+```
+pnpm dev
+```
+
 ### 🔭 Pengembangan Mendatang
 
 - CV multilingual

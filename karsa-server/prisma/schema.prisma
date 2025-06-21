@@ -10,27 +10,29 @@ datasource db {
 
 model User {
   id        String   @id @default(cuid())
-  name      String
   email     String   @unique
   password  String
+  name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Profile Profile?
-  CV      CV?
+  profile Profile?
+  cv      CV?
+
+  profileId String? @unique
+  cvId      String? @unique
 }
 
 model Profile {
   id        String   @id @default(cuid())
   userId    String   @unique
-  fullName  String
-  jobTitle  String
-  email     String
+  fullName  String?
+  jobTitle  String?
+  email     String?
   phone     String?
   address   String?
   website   String?
   linkedin  String?
-  github    String?
   photoUrl  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -41,27 +43,27 @@ model Profile {
 model CV {
   id          String   @id @default(cuid())
   userId      String   @unique
-  title       String
+  title       String?
   summary     String?
-  template    String
+  template    String?
   isPublished Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  use        User         @relation(fields: [userId], references: [id])
-  Skill      Skill[]
-  Education  Education[]
-  Experience Experience[]
-  Certficate Certficate[]
+  user         User          @relation(fields: [userId], references: [id])
+  educations   Education[]
+  experiences  Experience[]
+  skills       Skill[]
+  certificates Certificate[]
 }
 
 model Education {
   id      String    @id @default(cuid())
   cvId    String
-  school  String
-  degree  String
+  school  String?
+  degree  String?
   major   String?
-  startAt DateTime
+  startAt DateTime?
   endAt   DateTime?
 
   cv CV @relation(fields: [cvId], references: [id])
@@ -70,30 +72,30 @@ model Education {
 model Experience {
   id          String    @id @default(cuid())
   cvId        String
-  company     String
-  position    String
-  description String?
-  startAt     DateTime
+  company     String?
+  position    String?
+  startAt     DateTime?
   endAt       DateTime?
+  description String?
 
   cv CV @relation(fields: [cvId], references: [id])
 }
 
 model Skill {
-  id    String @id @default(cuid())
+  id    String  @id @default(cuid())
   cvId  String
-  name  String
-  level String
+  name  String?
+  level String?
 
   cv CV @relation(fields: [cvId], references: [id])
 }
 
-model Certficate {
-  id       String   @id @default(cuid())
+model Certificate {
+  id       String    @id @default(cuid())
   cvId     String
-  name     String
-  issuer   String
-  issuedAt DateTime
+  name     String?
+  issuer   String?
+  issuedAt DateTime?
   link     String?
 
   cv CV @relation(fields: [cvId], references: [id])
