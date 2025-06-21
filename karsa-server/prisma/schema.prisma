@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  profile Profile?
+  cv      CV?
+
+  profileId String? @unique
+  cvId      String? @unique
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  fullName  String?
+  jobTitle  String?
+  email     String?
+  phone     String?
+  address   String?
+  website   String?
+  linkedin  String?
+  photoUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model CV {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  title       String?
+  summary     String?
+  template    String?
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user         User          @relation(fields: [userId], references: [id])
+  educations   Education[]
+  experiences  Experience[]
+  skills       Skill[]
+  certificates Certificate[]
+}
+
+model Education {
+  id      String    @id @default(cuid())
+  cvId    String
+  school  String?
+  degree  String?
+  major   String?
+  startAt DateTime?
+  endAt   DateTime?
+
+  cv CV @relation(fields: [cvId], references: [id])
+}
+
+model Experience {
+  id          String    @id @default(cuid())
+  cvId        String
+  company     String?
+  position    String?
+  startAt     DateTime?
+  endAt       DateTime?
+  description String?
+
+  cv CV @relation(fields: [cvId], references: [id])
+}
+
+model Skill {
+  id    String  @id @default(cuid())
+  cvId  String
+  name  String?
+  level String?
+
+  cv CV @relation(fields: [cvId], references: [id])
+}
+
+model Certificate {
+  id       String    @id @default(cuid())
+  cvId     String
+  name     String?
+  issuer   String?
+  issuedAt DateTime?
+  link     String?
+
+  cv CV @relation(fields: [cvId], references: [id])
+}
