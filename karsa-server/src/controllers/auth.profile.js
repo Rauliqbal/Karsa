@@ -95,3 +95,28 @@ export const login = async (req, res) => {
     });
   }
 };
+
+// Get User
+export const getUser = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.user.id,
+      },
+    });
+
+    const { password: _, ...withoutPassword } = user;
+
+    res.status(200).json({
+      success: true,
+      message: "Berhasil mendapatkan data user",
+      data: withoutPassword,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
