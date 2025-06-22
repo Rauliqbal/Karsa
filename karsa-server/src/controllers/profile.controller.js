@@ -35,3 +35,32 @@ export const createProfile = async (req, res) => {
     });
   }
 };
+
+export const getProfile = async (req, res) => {
+  try {
+    const profile = await prisma.profile.findUnique({
+      where: {
+        userId: req.user.id,
+      },
+    });
+
+    if (!profile) {
+      return res.status(404).json({
+        success: false,
+        message: "Profile tidak ditemukan",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Berhasil mendapatkan profile",
+      data: profile,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
