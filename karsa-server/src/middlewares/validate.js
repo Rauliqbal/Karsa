@@ -9,7 +9,7 @@ const validate = (schema) => (req, res, next) => {
     if (error instanceof ZodError) {
       return res.status(400).json({
         success: false,
-        message: "Validasi error",
+        message: error.message,
         error: error.flatten().fieldErrors,
       });
     }
