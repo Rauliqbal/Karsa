@@ -124,3 +124,44 @@ export const updateProfile = async (req, res) => {
     });
   }
 };
+
+export const deleteProfile = async (req, res) => {
+  try {
+    const profile = await prisma.profile.findUnique({
+      where: {
+        userId: req.user.id,
+      },
+    });
+
+    if (!profile) {
+      return res.status(404).json({
+        success: false,
+        message: "Profile tidak ditemukan",
+      });
+    }
+
+    // Hapus foto lama
+    if (profile.photoUrl) {
+      fs.unlink(path.join("uploads", profile.photoUrl), (err) => {
+        if (err) console.error("Gagal hapus foto lama:", err.message);
+      });
+    }
+
+    await prisma.profile.delete({
+      where: {
+        id: profile.id,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Berhasil menghapus profile",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};

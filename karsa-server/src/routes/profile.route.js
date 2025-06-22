@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createProfile,
+  deleteProfile,
   getProfile,
   updateProfile,
 } from "../controllers/profile.controller.js";
@@ -26,5 +27,6 @@ route.put(
   validate(profileSchema),
   updateProfile
 );
+route.delete("/:id", authorization, deleteProfile);
 
 export const profileRoute = route;
