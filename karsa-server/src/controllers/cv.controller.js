@@ -1,5 +1,6 @@
 import { prisma } from "../lib/prisma.js";
 
+// Create CV
 export const createCv = async (req, res) => {
   const { title, summary, template, isPublished } = req.body;
 
