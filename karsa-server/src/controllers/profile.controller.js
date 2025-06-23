@@ -125,6 +125,7 @@ export const updateProfile = async (req, res) => {
   }
 };
 
+// Delete Profile
 export const deleteProfile = async (req, res) => {
   try {
     const profile = await prisma.profile.findUnique({
