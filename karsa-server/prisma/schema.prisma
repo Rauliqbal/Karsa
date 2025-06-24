@@ -57,6 +57,17 @@ model CV {
   certificates Certificate[]
 }
 
+model Certificate {
+  id       String    @id @default(cuid())
+  cvId     String
+  name     String?
+  issuer   String?
+  issuedAt DateTime?
+  link     String?
+
+  cv CV @relation(fields: [cvId], references: [id])
+}
+
 model Education {
   id      String    @id @default(cuid())
   cvId    String
@@ -86,17 +97,6 @@ model Skill {
   cvId  String
   name  String?
   level String?
-
-  cv CV @relation(fields: [cvId], references: [id])
-}
-
-model Certificate {
-  id       String    @id @default(cuid())
-  cvId     String
-  name     String?
-  issuer   String?
-  issuedAt DateTime?
-  link     String?
 
   cv CV @relation(fields: [cvId], references: [id])
 }
