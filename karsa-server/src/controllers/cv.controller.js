@@ -91,6 +91,40 @@ export const getCvById = async (req, res) => {
   }
 };
 
+// Update CV
+// Update CV
+export const updateCv = async (req, res) => {
+  const { id } = req.params;
+  const { title, summary, template, isPublished } = req.body;
+
+  await prisma.cV
+    .update({
+      where: {
+        id,
+      },
+      data: {
+        title,
+        summary,
+        template,
+        isPublished,
+      },
+    })
+    .then((cv) => {
+      res.status(200).json({
+        success: true,
+        message: "Berhasil memperbarui CV",
+        data: cv,
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message,
+      });
+    });
+};
+
 // Delete CV
 export const deleteCv = async (req, res) => {
   const { id } = req.params;
