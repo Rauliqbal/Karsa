@@ -116,3 +116,47 @@ export const updateCertificate = async (req, res) => {
     });
   }
 };
+
+// Delete Certificate
+export const deleteCertificate = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const certificate = await prisma.certificate.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        cv: true,
+      },
+    });
+    if (!certificate)
+      res.status(404).json({
+        success: false,
+        message: "Certificate tidak ditemukan",
+      });
+
+    if (certificate.cv.userId !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: "Anda tidak berhak menghapus certificate ini",
+      });
+    }
+
+    await prisma.certificate.delete({
+      where: {
+        id,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Berhasil menghapus certificate",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};

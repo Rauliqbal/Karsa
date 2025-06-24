@@ -4,6 +4,7 @@ import validate from "../middlewares/validate.js";
 import { certificateSchema } from "../schemas/certificate.schema.js";
 import {
   createCertificate,
+  deleteCertificate,
   getCertificate,
   updateCertificate,
 } from "../controllers/certificate.controller.js";
@@ -18,4 +19,5 @@ route.put(
   validate(certificateSchema),
   updateCertificate
 );
+route.delete("/:id", authorization, deleteCertificate);
 export const certificateRoute = route;
