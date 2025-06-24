@@ -93,9 +93,37 @@ export const getCvById = async (req, res) => {
 
 // Delete CV
 export const deleteCv = async (req, res) => {
-  await prisma.cV.delete({
-    where: {
-      id: req.params.id,
-    },
-  });
+  const { id } = req.params;
+
+  try {
+    const cv = await prisma.cV.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!cv) {
+      return res.status(404).json({
+        success: false,
+        message: "CV tidak ditemukan",
+      });
+    }
+
+    await prisma.cV.delete({
+      where: {
+        id,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Berhasil menghapus CV",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
 };
