@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #5459ac;
+  --color-base: #eaefff;
+}
+
+body {
+  @apply bg-base;
+}
+
+.container {
+  @apply px-4 lg:px-0 max-w-[1190px] mx-auto;
+}
+
+/* COMPONENT */
+.btn-primary {
+  @apply px-5 py-3 rounded-full bg-primary text-white font-semibold hover:bg-primary/80 transition;
+}
