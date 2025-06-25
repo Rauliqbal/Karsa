@@ -15,6 +15,7 @@
 
         <div class="mt-10">
           <button class="btn-primary">Buat CV Sekarang</button>
+          <Button label="Submit" />
         </div>
       </div>
       <div>
