@@ -2,8 +2,7 @@
 
 <template>
   <div>
-    <UiNavbar />
-
+    <Navbar />
     <slot />
   </div>
 </template>

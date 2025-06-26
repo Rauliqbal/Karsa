@@ -1,5 +1,4 @@
 import tailwindcss from "@tailwindcss/vite";
-import Aura from "@primeuix/themes/aura";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
@@ -8,13 +7,16 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  modules: ["@pinia/nuxt", "@primevue/nuxt-module"],
-  primevue: {
-    options: {
-      theme: {
-        preset: Aura,
-        dark: false,
-      },
-    },
+  modules: ["@pinia/nuxt", "shadcn-nuxt", "@nuxt/icon"],
+  shadcn: {
+    /**
+     * Prefix for all the imported component
+     */
+    prefix: "",
+    /**
+     * Directory that the component lives in.
+     * @default "./components/ui"
+     */
+    componentDir: "./components/ui",
   },
 });
