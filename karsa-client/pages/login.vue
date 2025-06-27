@@ -5,8 +5,10 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="grid grid-cols-2 h-dvh items-center">
-    <div class="max-w-sm mx-auto">
+  <div
+    class="container grid grid-cols-2 my-40 items-center bg-white shadow-md border rounded-xl overflow-hidden"
+  >
+    <div class="max-w-sm mx-auto py-10">
       <h1 class="text-3xl font-semibold">Selamat Datang di Karsa</h1>
       <p class="text-secondary mt-4">
         Kami bantu kamu wujudkan niat dan tekad untuk meraih peluang karier
@@ -66,16 +68,22 @@ useSeoMeta({
           </NuxtLink>
         </p>
 
-        <Button class="w-full mt-4" type="submit"> Submit </Button>
+        <Button class="w-full mt-5" type="submit">Submit</Button>
       </form>
 
-      <p class="text-sm text-center mt-10">
+      <p class="text-sm text-center mt-4">
         Belum punya akun Karsa?
         <NuxtLink to="/register" class="text-primary hover:underline"
           >Buat akun sekarang</NuxtLink
         >
       </p>
     </div>
-    <div class="bg-primary w-full h-full"></div>
+    <div class="h-[540px]">
+      <img
+        class="w-full h-full object-cover"
+        src="https://images.unsplash.com/photo-1528716321680-815a8cdb8cbe?q=80&w=776&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="Karsa Project"
+      />
+    </div>
   </div>
 </template>
