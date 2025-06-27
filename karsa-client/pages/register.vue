@@ -1,26 +1,22 @@
 <script setup lang="ts">
-import Cookies from "js-cookie";
-
-const toast = useToast();
+const name = ref("");
 const email = ref("");
 const password = ref("");
+const confPassword = ref("");
 
 const login = async () => {
   try {
-    const res = await $fetch("http://localhost:4000/api/v1/auth/login", {
+    const res = await $fetch("http://localhost:4000/api/v1/auth/register", {
       method: "POST",
       body: {
+        name: name.value,
         email: email.value,
         password: password.value,
+        confPassword: confPassword.value,
       },
     });
-
-    Cookies.set("token", res.data.token);
-    toast.success({ title: "Login Berhasil", position: "topRight" });
   } catch (error) {
     alert(error);
-  } finally {
-    // navigateTo('/')
   }
 };
 
@@ -41,6 +37,20 @@ useSeoMeta({
       </p>
 
       <form @submit.prevent="login" class="mt-8">
+        <!-- Input nama -->
+        <div class="relative w-full max-w-sm items-center mt-4">
+          <Input
+            v-model="name"
+            type="text"
+            placeholder="Raul iqbal"
+            class="pl-10"
+          />
+          <span
+            class="absolute start-0 inset-y-0 flex items-center justify-center px-2"
+          >
+            <Icon name="akar-icons:person" class="text-gray-500" />
+          </span>
+        </div>
         <!-- Input email  -->
         <div class="relative w-full max-w-sm items-center mt-4">
           <Input
@@ -59,6 +69,20 @@ useSeoMeta({
         <div class="relative w-full max-w-sm items-center mt-4">
           <Input
             v-model="password"
+            type="password"
+            placeholder="Konfirmasi password"
+            class="pl-10"
+          />
+          <span
+            class="absolute start-0 inset-y-0 flex items-center justify-center px-2"
+          >
+            <Icon name="akar-icons:lock-on" class="text-gray-500" />
+          </span>
+        </div>
+        <!-- input Confirm Password -->
+        <div class="relative w-full max-w-sm items-center mt-4">
+          <Input
+            v-model="confPassword"
             type="password"
             placeholder="Konfirmasi password"
             class="pl-10"

@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  modules: ["@pinia/nuxt", "shadcn-nuxt", "@nuxt/icon"],
+  modules: ["@pinia/nuxt", "shadcn-nuxt", "@nuxt/icon", "nuxt-toast"],
   shadcn: {
     /**
      * Prefix for all the imported component
