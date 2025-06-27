@@ -1,7 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-  <nav class="bg-white py-4 absolute top-0 left-0 right-0">
+  <nav
+    class="bg-white py-4 fixed top-0 left-0 right-0 shadow-md shadow-gray-200"
+  >
     <div class="container flex items-center justify-between">
       <img class="h-14" src="~/assets/images/karsaCrop.png" alt="" />
 
