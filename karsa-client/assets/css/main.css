@@ -5,21 +5,7 @@
 
 @theme {
   --color-primary: #5459ac;
-  --primary-color: #3b82f6;
-  --color-base: #f1f1f1;
-}
-
-.container {
-  @apply px-4 lg:px-0 max-w-[1190px] mx-auto;
-}
-
-body {
-  @apply bg-base;
-}
-
-/* COMPONENT */
-.btn-primary {
-  @apply px-5 py-3 rounded-full bg-primary text-white font-semibold hover:bg-primary/80 transition;
+  --font-poppins: "Poppins", "sans-serif";
 }
 
 @theme inline {
@@ -137,6 +123,15 @@ body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-poppins;
+  }
+  .container {
+    @apply px-4 lg:px-0 max-w-[1190px] mx-auto;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-5 py-3 rounded-full bg-primary text-white font-semibold hover:bg-primary/80 transition;
   }
 }

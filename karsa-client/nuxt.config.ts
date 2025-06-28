@@ -7,11 +7,19 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  modules: ["@pinia/nuxt", "shadcn-nuxt", "@nuxt/icon"],
+  modules: [
+    "@pinia/nuxt",
+    "shadcn-nuxt",
+    "@nuxt/icon",
+    "nuxt-toast",
+    "@nuxtjs/google-fonts",
+  ],
+  googleFonts: {
+    families: {
+      Poppins: ["400", "500", "600", "700"],
+    },
+  },
   shadcn: {
-    /**
-     * Prefix for all the imported component
-     */
     prefix: "",
     /**
      * Directory that the component lives in.

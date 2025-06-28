@@ -2,11 +2,6 @@
 import Cookies from "js-cookie";
 import LoaderCircle from "~/icons/loader-circle.vue";
 
-const resetInput = () => {
-  const email = ref("");
-  const password = ref("");
-};
-
 interface LoginResponse {
   data: {
     token: string;
@@ -22,20 +17,31 @@ interface ZodIssue {
 }
 
 const toast = useToast();
+const name = ref("");
 const email = ref("");
 const password = ref("");
+const confirmPassword = ref("");
 const isLoading = ref(false);
 
-const login = async () => {
+const resetInput = () => {
+  const email = ref("");
+  const password = ref("");
+  const confirmPassword = ref("");
+  const name = ref("");
+};
+
+const register = async () => {
   isLoading.value = true;
   try {
     const res = await $fetch<LoginResponse>(
-      "http://localhost:4000/api/v1/auth/login",
+      "http://localhost:4000/api/v1/auth/register",
       {
         method: "POST",
         body: {
+          name: name.value,
           email: email.value,
           password: password.value,
+          confirmPassword: confirmPassword.value,
         },
       }
     );
@@ -45,7 +51,7 @@ const login = async () => {
     resetInput();
 
     setTimeout(() => {
-      navigateTo("/dashboard");
+      navigateTo("/login");
     }, 2000);
   } catch (error: any) {
     const issues: ZodIssue[] | undefined = error?.data?.message?.issues;
@@ -74,13 +80,13 @@ definePageMeta({
   layout: false,
 });
 useSeoMeta({
-  title: "Login - Karsa",
+  title: "Daftar Akun - Karsa",
 });
 </script>
 
 <template>
   <div
-    class="grid lg:grid-cols-2 items-center bg-white overflow-hidden h-screen p-6"
+    class="grid lg:grid-cols-2 items-center bg-white overflow-hidden min-h-screen p-6"
   >
     <div class="max-w-sm mx-auto">
       <img
@@ -89,21 +95,39 @@ useSeoMeta({
         alt="KarsaCV adalah platform pembuatan CV modern yang membantu siapa saja — dari pelajar, mahasiswa, hingga profesional."
       />
 
-      <h1 class="text-3xl font-semibold">Selamat Datang di Karsa</h1>
+      <h1 class="text-3xl font-semibold">Buat Akun dan Mulai Susun CV</h1>
       <p class="text-secondary mt-4">
-        Kami bantu kamu wujudkan niat dan tekad untuk meraih peluang karier
-        terbaik.
+        Dengan semangat karsa (niat & tekad), mari wujudkan peluang karier
+        terbaikmu.
       </p>
 
-      <form @submit.prevent="login" class="mt-8">
-        <!-- Input email  -->
+      <form @submit.prevent="register" class="mt-8">
+        <!-- Input name  -->
         <div>
+          <label for="name" class="text-sm">Nama</label>
+          <div class="relative w-full max-w-sm items-center mt-1">
+            <Input
+              v-model="name"
+              type="text"
+              placeholder="Masukkan nama panjang anda"
+              class="pl-10"
+              id="name"
+            />
+            <span
+              class="absolute start-0 inset-y-0 flex items-center justify-center px-2"
+            >
+              <Icon name="akar-icons:envelope" class="text-gray-500" />
+            </span>
+          </div>
+        </div>
+        <!-- Input email  -->
+        <div class="mt-4">
           <label for="email" class="text-sm">Email</label>
           <div class="relative w-full max-w-sm items-center mt-1">
             <Input
               v-model="email"
               type="email"
-              placeholder="raul@gmail.com"
+              placeholder="Masukkan email aktif"
               class="pl-10"
               id="email"
             />
@@ -121,7 +145,7 @@ useSeoMeta({
             <Input
               v-model="password"
               type="password"
-              placeholder="Konfirmasi password"
+              placeholder="Password minimal 6 karakter"
               class="pl-10"
               id="password"
             />
@@ -133,9 +157,30 @@ useSeoMeta({
           </div>
         </div>
 
+        <!-- input Conf Password -->
+        <div class="mt-4">
+          <label for="confirmPassword" class="text-sm"
+            >Konfirmasi Password</label
+          >
+          <div class="relative w-full max-w-sm items-center mt-1">
+            <Input
+              v-model="confirmPassword"
+              type="password"
+              placeholder="Konfirmasi password"
+              class="pl-10"
+              id="confirmPassword"
+            />
+            <span
+              class="absolute start-0 inset-y-0 flex items-center justify-center px-2"
+            >
+              <Icon name="akar-icons:lock-on" class="text-gray-500" />
+            </span>
+          </div>
+        </div>
+
         <p class="float-right text-sm mt-1">
           Lupa akun?
-          <NuxtLink to="/register" class="text-primary hover:underline">
+          <NuxtLink to="/" class="text-primary hover:underline">
             klik disini
           </NuxtLink>
         </p>
@@ -148,9 +193,9 @@ useSeoMeta({
       </form>
 
       <p class="text-sm text-center mt-4">
-        Belum punya akun Karsa?
+        Sudah punya akun Karsa?
         <NuxtLink to="/register" class="text-primary hover:underline"
-          >Buat akun sekarang</NuxtLink
+          >Masuk akun sekarang</NuxtLink
         >
       </p>
     </div>
