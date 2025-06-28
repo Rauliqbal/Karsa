@@ -86,7 +86,7 @@ useSeoMeta({
 
 <template>
   <div
-    class="grid lg:grid-cols-2 items-center bg-white overflow-hidden min-h-screen p-6"
+    class="grid lg:grid-cols-2 items-center bg-white overflow-hidden h-screen p-6"
   >
     <div class="max-w-sm mx-auto">
       <img
@@ -194,7 +194,7 @@ useSeoMeta({
 
       <p class="text-sm text-center mt-4">
         Sudah punya akun Karsa?
-        <NuxtLink to="/register" class="text-primary hover:underline"
+        <NuxtLink to="/login" class="text-primary hover:underline"
           >Masuk akun sekarang</NuxtLink
         >
       </p>
