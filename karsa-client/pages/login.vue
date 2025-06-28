@@ -45,7 +45,7 @@ const login = async () => {
     resetInput();
 
     setTimeout(() => {
-      navigateTo("/");
+      navigateTo("/dashboard");
     }, 2000);
   } catch (error: any) {
     const issues: ZodIssue[] | undefined = error?.data?.message?.issues;

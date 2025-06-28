@@ -51,7 +51,7 @@ const register = async () => {
     resetInput();
 
     setTimeout(() => {
-      navigateTo("/");
+      navigateTo("/login");
     }, 2000);
   } catch (error: any) {
     const issues: ZodIssue[] | undefined = error?.data?.message?.issues;
@@ -101,7 +101,7 @@ useSeoMeta({
         terbaikmu.
       </p>
 
-      <form @submit.prevent="login" class="mt-8">
+      <form @submit.prevent="register" class="mt-8">
         <!-- Input name  -->
         <div>
           <label for="name" class="text-sm">Nama</label>
@@ -195,7 +195,7 @@ useSeoMeta({
       <p class="text-sm text-center mt-4">
         Sudah punya akun Karsa?
         <NuxtLink to="/register" class="text-primary hover:underline"
-          >Buat akun sekarang</NuxtLink
+          >Masuk akun sekarang</NuxtLink
         >
       </p>
     </div>
