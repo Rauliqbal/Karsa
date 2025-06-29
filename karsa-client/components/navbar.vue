@@ -6,7 +6,7 @@
   >
     <div class="container flex items-center justify-between">
       <img
-        class="h-14"
+        class="h-10"
         src="~/assets/images/logo-karsa.svg"
         alt="KarsaCV adalah platform pembuatan CV modern yang membantu siapa saja — dari pelajar, mahasiswa, hingga profesional."
       />
