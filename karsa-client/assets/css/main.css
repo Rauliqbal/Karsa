@@ -128,11 +128,21 @@
   --sidebar-ring: oklch(0.442 0.017 285.786);
 }
 
+.container {
+  @apply px-4 lg:px-0 lg:max-w-[1190px] 2xl:max-w-[1290px] mx-auto;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-poppins;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-5 py-3 rounded-full bg-primary text-white font-semibold hover:bg-primary/80 transition;
   }
 }
