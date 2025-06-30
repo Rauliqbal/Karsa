@@ -1,4 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Cookies from "js-cookie";
+
+const isLogin = computed(() => {
+  return Cookies.get("karsa_token");
+});
+
+const auth = useAuthStore();
+
+onMounted(() => {
+  auth.getUser();
+});
+</script>
 
 <template>
   <nav
@@ -19,7 +31,14 @@
       </div>
 
       <Button class="btn-primary">
-        <NuxtLink to="/login">Login</NuxtLink>
+        <template v-if="!isLogin"
+          ><NuxtLink to="/login">Login</NuxtLink></template
+        >
+        <template v-else>
+          <NuxtLink to="/dashboard"
+            >Hello,{{ auth.user?.name.split(" ").slice(0, 2).join(" ") }}
+          </NuxtLink></template
+        >
       </Button>
     </div>
   </nav>
