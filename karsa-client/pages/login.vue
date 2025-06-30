@@ -40,7 +40,7 @@ const login = async () => {
       }
     );
 
-    Cookies.set("token", res.data.token);
+    Cookies.set("karsa_token", res.data.token);
     toast.success({ title: "Login Berhasil", position: "topRight" });
     resetInput();
 

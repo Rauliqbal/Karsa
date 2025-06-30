@@ -46,8 +46,7 @@ const register = async () => {
       }
     );
 
-    Cookies.set("token", res.data.token);
-    toast.success({ title: "Login Berhasil", position: "topRight" });
+    toast.success({ title: "Register Berhasil", position: "topRight" });
     resetInput();
 
     setTimeout(() => {
