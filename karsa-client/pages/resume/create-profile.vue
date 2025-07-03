@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const templateStore = useTemplateStore();
 
@@ -22,9 +24,27 @@ const submitProfile = () => {
   console.log("Profile submitted:", profile);
 };
 
-const downloadPDF = () => {
-  window.print();
+const downloadPDF = async () => {
+  if(!pdfRef.value) return;
+
+  await nextTick();
+
+  const canvas = await html2canvas(pdfRef.value, {
+    scale: 2,
+    logging: true
+  })
+
+  const imgData = canvas.toDataURL("image/png");
+  const pdf = new jsPDF('p', 'mm', 'a4');
+
+  const imgProps = pdf.getImageProperties(imgData);
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+  pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+  pdf.save('resume.pdf');
 };
+
 
 const handlePhotoUpload = (e: Event) => {
   const target = e.target as HTMLInputElement;
@@ -149,34 +169,3 @@ const handlePhotoUpload = (e: Event) => {
     </div>
   </div>
 </template>
-
-<style>
-@media print {
-  @page {
-    margin: 0;
-  }
-
-  body {
-    margin: 0;
-  }
-
-  body * {
-    visibility: hidden;
-  }
-
-  .printable, .printable * {
-    visibility: visible;
-  }
-
-  .printable {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-  }
-
-  .no-print {
-    display: none;
-  }
-}
-</style>
