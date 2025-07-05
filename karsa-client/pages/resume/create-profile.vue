@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import { ref, reactive } from "vue";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const templateStore = useTemplateStore();
 
 const profile = reactive({
   name: "Muhamad Raul",
   jobTitle: "Fullstack Developer",
-  phone: '089 1323',
+  phone: "089 1323",
   email: "raul@example.com",
   summary: "Experienced developer with expertise in Nuxt and Next.js.",
-  photoUrl: '', // untuk preview foto
+  photoUrl: "", // untuk preview foto
   experiences: [
     { role: "Frontend Developer", company: "ABC Corp", years: "2020-2022" },
     { role: "Backend Developer", company: "XYZ Ltd", years: "2022-2025" },
@@ -21,30 +21,30 @@ const profile = reactive({
 const pdfRef = ref<HTMLElement | null>(null);
 
 const submitProfile = () => {
+  localStorage.setItem("karsa_profile", JSON.stringify(profile));
   console.log("Profile submitted:", profile);
 };
 
 const downloadPDF = async () => {
-  if(!pdfRef.value) return;
+  if (!pdfRef.value) return;
 
   await nextTick();
 
   const canvas = await html2canvas(pdfRef.value, {
     scale: 2,
-    logging: true
-  })
+    logging: true,
+  });
 
   const imgData = canvas.toDataURL("image/png");
-  const pdf = new jsPDF('p', 'mm', 'a4');
+  const pdf = new jsPDF("p", "mm", "a4");
 
   const imgProps = pdf.getImageProperties(imgData);
   const pdfWidth = pdf.internal.pageSize.getWidth();
   const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-  pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-  pdf.save('resume.pdf');
+  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+  pdf.save("resume.pdf");
 };
-
 
 const handlePhotoUpload = (e: Event) => {
   const target = e.target as HTMLInputElement;
@@ -70,7 +70,9 @@ const handlePhotoUpload = (e: Event) => {
         <h2 class="text-2xl font-semibold mb-4">Data Diri</h2>
         <form @submit.prevent="submitProfile" class="space-y-4">
           <div>
-            <label for="photo" class="block font-medium text-gray-700">Foto Profil</label>
+            <label for="photo" class="block font-medium text-gray-700"
+              >Foto Profil</label
+            >
             <input
               id="photo"
               type="file"
@@ -79,12 +81,18 @@ const handlePhotoUpload = (e: Event) => {
               class="mt-1 block w-full text-gray-700"
             />
             <div v-if="profile.photoUrl" class="mt-2">
-              <img :src="profile.photoUrl" alt="Preview" class="h-32 w-32 object-cover rounded-md border" />
+              <img
+                :src="profile.photoUrl"
+                alt="Preview"
+                class="h-32 w-32 object-cover rounded-md border"
+              />
             </div>
           </div>
 
           <div>
-            <label for="name" class="block font-medium text-gray-700">Nama Lengkap</label>
+            <label for="name" class="block font-medium text-gray-700"
+              >Nama Lengkap</label
+            >
             <input
               id="name"
               v-model="profile.name"
@@ -94,7 +102,9 @@ const handlePhotoUpload = (e: Event) => {
           </div>
 
           <div>
-            <label for="email" class="block font-medium text-gray-700">Email</label>
+            <label for="email" class="block font-medium text-gray-700"
+              >Email</label
+            >
             <input
               id="email"
               v-model="profile.email"
@@ -104,7 +114,9 @@ const handlePhotoUpload = (e: Event) => {
           </div>
 
           <div>
-            <label for="jobTitle" class="block font-medium text-gray-700">Job Title</label>
+            <label for="jobTitle" class="block font-medium text-gray-700"
+              >Job Title</label
+            >
             <input
               id="jobTitle"
               v-model="profile.jobTitle"
@@ -114,7 +126,9 @@ const handlePhotoUpload = (e: Event) => {
           </div>
 
           <div>
-            <label for="phone" class="block font-medium text-gray-700">Nomor Telepon</label>
+            <label for="phone" class="block font-medium text-gray-700"
+              >Nomor Telepon</label
+            >
             <input
               id="phone"
               v-model="profile.phone"
@@ -124,7 +138,9 @@ const handlePhotoUpload = (e: Event) => {
           </div>
 
           <div>
-            <label for="summary" class="block font-medium text-gray-700">Ringkasan Profil</label>
+            <label for="summary" class="block font-medium text-gray-700"
+              >Ringkasan Profil</label
+            >
             <textarea
               id="summary"
               v-model="profile.summary"
