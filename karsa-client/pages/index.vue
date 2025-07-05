@@ -14,7 +14,9 @@
         </p>
 
         <div class="mt-10">
-          <Button class="btn-primary">Buat CV Sekarang</Button>
+          <Button class="btn-primary">
+            <NuxtLink to="/resume">Buat CV Sekarang</NuxtLink>
+          </Button>
         </div>
       </div>
       <div>
