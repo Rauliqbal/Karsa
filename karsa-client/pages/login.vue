@@ -72,6 +72,7 @@ const login = async () => {
 
 definePageMeta({
   layout: false,
+  middleware: "guest",
 });
 useSeoMeta({
   title: "Login - Karsa",

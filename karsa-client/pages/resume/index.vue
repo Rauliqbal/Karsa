@@ -1,9 +1,9 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 definePageMeta({
-  middleware: 'redirect-resume'
-})
+  middleware: "authorization",
+});
 </script>
 
 <template>
-<div></div>
+  <div></div>
 </template>

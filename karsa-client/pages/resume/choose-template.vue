@@ -1,28 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Card, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
-import { Button } from '~/components/ui/button';
+import { ref } from "vue";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
 
 definePageMeta({
-  layout: false
+  layout: false,
 });
 useHead({
-  title: 'Choose Template - KarsaCV',
-})
+  title: "Choose Template - KarsaCV",
+});
 
 const selectedTemplate = ref<number | null>(null);
-const templateStore = useTemplateStore()
-const router = useRouter()
+const templateStore = useTemplateStore();
 
 const selectTemplate = (id: number) => {
   selectedTemplate.value = id;
-  templateStore.setTemplate(id)
+  localStorage.setItem("karsa_template", id.toString());
 };
 
-const goNext = () =>{
- navigateTo('/resume/create-profile')
- console.log("Button click")
-}
+const goNext = () => {
+  navigateTo("/resume/create-profile");
+  console.log("Button click");
+};
 </script>
 
 <template>
@@ -45,9 +49,7 @@ const goNext = () =>{
     </div>
 
     <div class="text-center mt-8" v-if="selectedTemplate !== null">
-      <Button @click="goNext">
-        Next
-      </Button>
+      <Button @click="goNext"> Next </Button>
     </div>
   </div>
 </template>
