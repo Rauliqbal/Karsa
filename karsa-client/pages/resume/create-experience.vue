@@ -4,17 +4,15 @@ import Textarea from "~/components/ui/textarea/Textarea.vue";
 // import html2canvas from "html2canvas";
 // import jsPDF from "jspdf";
 
-const templateStore = useTemplateStore();
-
 // Reactive state untuk template yang dipilih
-const templateid = computed(() => templateStore.selectedTemplate);
+const templateStore = ref<number>(0);
 
-console.log("template:", templateStore.selectedTemplate?.valueOf);
+console.log("template:", templateStore.value);
 
 // Refs
 const pdfRef = ref<HTMLElement | null>(null);
 
-// Data profile
+// Data profil
 const profile = reactive({
   name: "Muhamad Raul",
   jobTitle: "Fullstack Developer",
@@ -72,8 +70,10 @@ const handlePhotoUpload = (e: Event) => {
 
 // Load template pilihan dari localStorage
 onMounted(() => {
-  templateStore.loadFromLocalStorage();
-  console.log("Template loaded from store:", templateStore.selectedTemplate);
+  const storedTemplate = localStorage.getItem("karsa_template");
+  if (storedTemplate) {
+    templateStore.value = parseInt(storedTemplate);
+  }
 });
 </script>
 
@@ -174,11 +174,7 @@ onMounted(() => {
         </div>
 
         <!-- Right: CV Preview -->
-        <ResumePreview
-          ref="pdfRef"
-          :profile="profile"
-          :templateId="templateid"
-        />
+        <ResumePreview :profile="profile" :templateId="templateStore" />
       </div>
     </div>
   </template>
